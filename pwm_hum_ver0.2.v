@@ -18,11 +18,11 @@ module pwm_hum (
 	always@(*) begin
 		case(humidity10)
 			4'd0, 4'd1: //습도 20% 미만
-				duty_cycle = (PERIOD * 20) / 100; // (999 * 20) / 100 = 19980 / 100 = 199 (정수 계산)
+				duty_cycle = (RERIOD * 20) / 100; // (999 * 20) / 100 = 19980 / 100 = 199 (정수 계산)
 			4'd2, 4'd3, 4'd4: // 습도 50% 미만
-				duty_cycle = (PERIOD * 50) / 100; 
+				duty_cycle = (RERIOD * 50) / 100; 
 			4'd5, 4'd6, 4'd7: // 습도 80% 미만
-				duty_cycle = (PERIOD * 80) / 100; 
+				duty_cycle = (RERIOD * 80) / 100; 
 			default: //습도 80% 이상
 				duty_cycle = 0;
 		endcase
@@ -34,7 +34,7 @@ module pwm_hum (
 			pwm <= 1'b0;
 		end
 		else begin
-			if(counter == PERIOD) begin
+			if(counter == RERIOD) begin
 				counter <= 0;
 			end else begin
 				counter <= counter + 1'b1;
