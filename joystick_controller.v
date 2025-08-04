@@ -34,6 +34,11 @@ module joystick_controller(
 	localparam	READ_Y = 2;
 	localparam	WAIT_X = 3;
 	reg	[1:0]	state = READ_X;
+
+	localparam DEAD_ZONE_LOW = 1800;
+	localparam DEAD_ZONE_HIGH = 2300;
+	localparam THRESHOLD_LOW = 1000;
+	localparam THRESHOLD_HIGH = 3000;
 	
 	xadc_wiz_0	xadc_inst(
 		.daddr_in(daddr_in),
@@ -104,25 +109,26 @@ module joystick_controller(
 		else begin
 // 임계값(Threshold) 설정 (12비트: 0~4095, 중앙값: ~2048)
 // 이 값들은 7세그먼트 디버깅을 통해 실제 조이스틱에 맞게 조정해야 합니다.		
-			localparam DEAD_ZONE_LOW = 1800;
-			localparam DEAD_ZONE_HIGH = 2300;
-			localparam THRESHOLD_LOW = 1000;
-			localparam THRESHOLD_HIGH = 3000;
+
 			
-			joystick_up <= 1'b0;
-			joystick_down <= 1'b0;
-			joystick_right <= 1'b0;
-			joystick_left <= 1'b0;			
+			if (x_data_reg > DEAD_ZONE_LOW && x_data_reg < DEAD_ZONE_HIGH && y_data_reg > DEAD_ZONE_LOW && y_data_reg < DEAD_ZONE_HIGH) begin
+				joystick_up <= 1'b0;
+				joystick_down <= 1'b0;
+				joystick_right <= 1'b0;
+				joystick_left <= 1'b0;
+			end	
+			else begin
+				if(y_data_reg > THRESHOLD_HIGH) joystick_up <= 1'b1;
+				else if(y_data_reg < THRESHOLD_LOW) joystick_down <= 1'b1;
 			
-			if(y_data_reg > THRESHOLD_HIGH) joystick_up <= 1'b1;
-			else if(y_data_reg < THRESHOLD_LOW) joystick_down <= 1'b1;
-			
-			if(x_data_reg < THRESHOLD_LOW) joystick_left <= 1'b1;
-			else if(x_data_reg > THRESHOLD_HIGH) joystick_right <= 1'b1;
+				if(x_data_reg < THRESHOLD_LOW) joystick_left <= 1'b1;
+				else if(x_data_reg > THRESHOLD_HIGH) joystick_right <= 1'b1;
+			end
 		end
 	end
 	
 	assign x_axis_data = x_data_reg;
 	assign y_axis_data = y_data_reg;
 endmodule
+
 			
