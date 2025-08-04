@@ -22,9 +22,12 @@ module mode_controller (
     output reg [1:0] btn_UD_out,
 	output reg pump_on,
 	output reg manual_on,
-	output reg pump_off
+	output reg pump_off,
+	output reg [2:0] led
 ); 
     localparam LONG_PRESS_TARGET = 3_000_000; // 3초
+    localparam ONE_SECOND = 1_000_000; // 1초
+    localparam TWO_SECOND = 2_000_000; // 2초
 	reg [22:0] long_press_counter;
 
     reg btn_R_reg, btn_R_prev;
@@ -114,9 +117,13 @@ module mode_controller (
 					else btn_UD_out <= 2'd2;
 				end
 				
-				if(btn_OK_rise && long_press_counter < LONG_PRESS_TARGET) pump_on <= 1'b1;
+				if(btn_OK_rise && long_press_counter < LONG_PRESS_TARGET) pump_on <= 1'b1; // manual_on <= 1'b1 => pump_on <= 1'b1;
 				
 			end
+			if(!btn_OK) led <= 3'd0;
+			else if (long_press_counter >= TWO_SECOND) led <= 3'd2;
+			else if(long_press_counter >= ONE_SECOND) led <= 3'd1;
+			else led <= 3'd0;
 		end
 	end
 endmodule
