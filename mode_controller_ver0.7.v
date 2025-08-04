@@ -122,6 +122,7 @@ module mode_controller (
 				
 			end
 			if(!btn_OK) led <= 3'd0;
+			else if (long_press_counter >= LONG_PRESS_TARGET) led <= 3'd3;			
 			else if (long_press_counter >= TWO_SECOND) led <= 3'd2;
 			else if(long_press_counter >= ONE_SECOND) led <= 3'd1;
 			else led <= 3'd0;
