@@ -77,7 +77,7 @@ module top(
 	wire	[15:0]	b2d_dout;
 	wire	[15:0]	seg_display_data;
 	
-	joystic_controller joy_ctr1(
+	joystick_controller joy_ctr1(
 		.clk_100MHz(clk),
 		.clk_1MHz(clk_1MHz),
 		.rst_n(rst_n),
@@ -237,4 +237,5 @@ module top(
     assign uart_txd = 1'b1; // Keep TX line idle
     assign uart_txd_pc = 1'b1; // Keep TX line idle
 	
+
 endmodule
