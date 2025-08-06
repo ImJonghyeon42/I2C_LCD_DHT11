@@ -88,7 +88,7 @@ module joystick_controller(
 				WAIT_Y: begin
 					den_in <= 1'b0;
 					if(drdy_out) begin
-						x_data_reg <= do_out[15:4];
+						y_data_reg <= do_out[15:4];
 						state <= READ_X;
 					end
 				end
@@ -130,5 +130,6 @@ module joystick_controller(
 endmodule
 
 			
+
 
 
