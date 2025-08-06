@@ -35,8 +35,6 @@ module joystick_controller(
 	localparam	WAIT_X = 3;
 	reg	[1:0]	state = READ_X;
 
-	localparam DEAD_ZONE_LOW = 1800;
-	localparam DEAD_ZONE_HIGH = 2300;
 	localparam THRESHOLD_LOW = 1000;
 	localparam THRESHOLD_HIGH = 3000;
 	
@@ -99,7 +97,7 @@ module joystick_controller(
 	end		
 // 디지털 값으로 변환된 조이스틱 데이터를 기반으로 제어 신호 생성
 // 이 부분은 엣지 검출(Edge Detection)을 추가하여 펄스 신호로 만드는 것이 좋습니다.	
-	always@)posedge clk_1MHz or negedge rst_n) begin
+	always@(posedge clk_1MHz or negedge rst_n) begin
 		if(~rst_n) begin
 			joystick_up <= 1'b0;
 			joystick_down <= 1'b0;
@@ -132,3 +130,4 @@ module joystick_controller(
 endmodule
 
 			
+
