@@ -2,7 +2,7 @@
 
 module mcp3008_driver (
     input clk,
-    input reset,
+    input rst_n,
     input start,
 	
     output reg [9:0] x_data_out, //최종 X축 10비트 데이터
@@ -30,8 +30,8 @@ module mcp3008_driver (
     localparam CMD_CH0 = 5'b11000;// {Start(1), SGL/DIFF(1), D2(0), D1(0), D0(0)} -> 5'b11000
     localparam CMD_CH1 = 5'b11001; // {Start(1), SGL/DIFF(1), D2(0), D1(0), D0(1)} -> 5'b11001
 
-    always @(posedge clk or negedge reset) begin
-        if (~reset) begin
+    always @(posedge clk or negedge rst_n) begin
+        if (~rst_n) begin
             // 초기화
             spi_cs <= 1'b1; // Chip Select는 Active Low이므로 평소에 High
             spi_sck <= 1'b0;
@@ -49,7 +49,7 @@ module mcp3008_driver (
             case (state)
                 S_IDLE: begin
                     if (start) begin
-                        cs <= 1'b0; // 통신 시작, CS를 Low로                        
+                        spi_cs <= 1'b0; // 통신 시작, CS를 Low로                        
                         bit_count <= 0;
                         state <= S_COMM_X;
                     end
