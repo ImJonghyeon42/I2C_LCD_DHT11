@@ -46,9 +46,9 @@ module joystick_controller(
 		.dwe_in(0),
 		.busy_out(),
 		.vauxp6(joy_x_p),
-		.vauxp6(joy_x_n),
+		.vauxn6(joy_x_n),
 		.vauxp7(joy_y_p),
-		.vauxp7(joy_y_n),
+		.vauxn7(joy_y_n),
 		.vn_in(1'b0),
 		.vp_in(1'b0),
 		.alarm_out(),
@@ -130,4 +130,5 @@ module joystick_controller(
 endmodule
 
 			
+
 
