@@ -32,7 +32,7 @@ module joystick_controller(
 	localparam	READ_X = 0;
 	localparam	WAIT_X = 1;
 	localparam	READ_Y = 2;
-	localparam	WAIT_X = 3;
+	localparam	WAIT_Y = 3;
 	reg	[1:0]	state = READ_X;
 
 	localparam THRESHOLD_LOW = 1000;
@@ -130,6 +130,7 @@ module joystick_controller(
 endmodule
 
 			
+
 
 
 
