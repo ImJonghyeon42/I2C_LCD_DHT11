@@ -1,15 +1,15 @@
 module joystick_to_button(
 	input clk,
 	input rst_n,
-	input [11:0] x_axis_in,
-	input [11:0] y_axis_in,
+	input [9:0] x_axis_in,
+	input [9:0] y_axis_in,
 	output reg btn_L_out,
 	output reg btn_R_out,
 	output reg btn_U_out,
 	output reg btn_D_out
 );
-	localparam THRESH_LOW = 1000;
-	localparam THRESH_HIGH = 3000;
+	localparam THRESH_LOW = 200;
+	localparam THRESH_HIGH = 800;
 	
 	always@(posedge clk or negedge rst_n) begin
 		if(~rst_n) begin
