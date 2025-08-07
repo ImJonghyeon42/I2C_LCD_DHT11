@@ -18,7 +18,7 @@ module text(
 	input [9:0] y_adc
 );
 	function [15:0] int_to_ascii(input [9:0] val);
-		reg [3:0] d3,d2,d1,d0;
+		
 		d3 = val / 1000;
 		d2 = (val % 1000) / 100;
 		d1 = (val % 100) / 10;
@@ -26,10 +26,22 @@ module text(
 		int_to_ascii = {(d3+8'h30), (d2+8'h30),(d1+8'h30),(d0+8'h30)};
 	endfunction
 	
-	always@(*) begin			
+	always@(*) begin	
+		reg [3:0] x_d3, x_d2, x_d1, x_d0;
+		reg [3:0] y_d3, y_d2, y_d1, y_d0;
+		
 		if(sw) begin
-			row1 <= {"X: ", int_to_ascii(x_adc), "        "};
-			row2 <= {"Y: ", int_to_ascii(y_adc), "        "};
+			x_d3 = x_adc / 1000;
+			x_d2 = (x_adc % 1000) / 100;
+			x_d1 = (x_adc % 100) / 10;
+			x_d0 = x_adc % 10;
+						
+			row1 <= {"X: ", (x_d3 + 8'h30),(x_d2 + 8'h30),(x_d1 + 8'h30),(x_d0 + 8'h30), "     "};
+			y_d3 = y_adc / 1000;
+			y_d2 = (y_adc % 1000) / 100;
+			y_d1 = (y_adc % 100) / 10;
+			y_d0 = y_adc % 10;
+			row1 <= {"Y: ", (y_d3 + 8'h30),(y_d2 + 8'h30),(y_d1 + 8'h30),(y_d0 + 8'h30), "     "};
             
 		end 
 		else begin
