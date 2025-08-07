@@ -217,7 +217,7 @@ module top(
 		.btn_R(btn_R_pulse),
 		.btn_U(btn_U_pulse),
 		.btn_D(btn_D_pulse),
-		.btn_OK(!joy_ok),
+		.btn_OK(joy_ok_clean),
         .btn_LR_out(btn_LR_out_W),
         .btn_UD_out(btn_UD_out_W),
 		.uart_data_valid(rx_valid),
@@ -228,7 +228,7 @@ module top(
 		.manual_on(manual_on_trigger),
 		.pump_off(pump_off_trigger),
 		.led(led_bar_w),
-		.mode_select(joy_ok_clean)
+		.mode_select(mode_select_W)
     );
 	
     assign uart_txd = 1'b1; // Keep TX line idle
