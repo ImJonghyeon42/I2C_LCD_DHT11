@@ -15,12 +15,13 @@ module mcp3008_driver (
 );
 
     // FSM 상태 정의
-    localparam S_IDLE      = 3'd0;
-	localparam S_START_X   = 3'd1;
-    localparam S_COMM_X    = 3'd2;
-	localparam S_END_X_START_Y  = 3'd2;
-    localparam S_COMM_Y    = 3'd4;
-    localparam S_DONE      = 3'd5;
+    localparam S_IDLE      = 4'd0;
+	localparam S_START_X   = 4'd1;
+    localparam S_COMM_X    = 4'd2;
+	localparam S_RESET_FOR_Y    = 4'd3;
+	localparam S_START_Y	= 4'd4
+    localparam S_COMM_Y    = 4'd4;
+    localparam S_DONE      = 4'd5;
 
     localparam COMM_BITS   = 16;
 	
@@ -48,8 +49,10 @@ module mcp3008_driver (
 
             case (state)
                 S_IDLE: begin
+					spi_cs <= 1'b1;
+					spi_sck <= 1'b0;
                     if (start) begin
-                        state <= S_COMM_X;
+                        state <= S_START_X;
                     end
                 end
 				S_START_X: begin
@@ -68,18 +71,21 @@ module mcp3008_driver (
                         bit_count <= bit_count + 1;
                     end
                     if (bit_count == COMM_BITS) begin
-                        state <= S_END_X_START_Y;
+                        state <= S_RESET_FOR_Y;
                     end					
                 end
-				S_END_X_START_Y: begin
+				S_RESET_FOR_Y: begin
 					spi_cs <= 1'b1;
 					spi_sck <= 1'b0;
+					state <= S_START_Y;
+				end			
+				S_START_Y : begin
+					spi_cs <= 1'b0;
 					bit_count <= 0;
 					state <= S_COMM_Y;
-				end				
+				end
 				
                 S_COMM_Y: begin
-                    spi_cs <= 1'b0;
 					spi_sck <= ~spi_sck;
                     if (spi_sck == 1'b0) begin
                         if (bit_count < 5) spi_mosi <= CMD_CH1[4 - bit_count];
@@ -100,6 +106,9 @@ module mcp3008_driver (
                     data_valid <= 1'b1;
                     state <= S_IDLE;
                 end
+				default : begin
+					state <= S_IDLE;
+				end
             endcase
         end
     end
