@@ -20,8 +20,8 @@ module mcp3008_driver (
     localparam S_COMM_X    = 4'd2;
 	localparam S_RESET_FOR_Y    = 4'd3;
 	localparam S_START_Y	= 4'd4
-    localparam S_COMM_Y    = 4'd4;
-    localparam S_DONE      = 4'd5;
+    localparam S_COMM_Y    = 4'd5;
+    localparam S_DONE      = 4'd6;
 
     localparam COMM_BITS   = 16;
 	
@@ -113,3 +113,4 @@ module mcp3008_driver (
         end
     end
 endmodule
+
