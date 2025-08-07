@@ -28,7 +28,7 @@ module mcp3008_driver (
     reg [3:0] state = S_IDLE; 
     reg [9:0] x_buffer, y_buffer;
     
-    localparam CMD_CH0 = 5'b11001;
+    localparam CMD_CH0 = 5'b11000;
     localparam CMD_CH1 = 5'b11001;
 
     always @(posedge clk or negedge rst_n) begin
