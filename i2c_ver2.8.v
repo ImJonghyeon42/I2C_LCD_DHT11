@@ -1,4 +1,4 @@
-a//clk_divider를 제거 -> clockdivider
+//clk_divider를 제거 -> clockdivider
 //DHT11의 debuging용으로 led 배치
 // UART 추가, 블루투스 연결
 // text 모듈에서 블루투스로 받은 메뉴 상태를 버튼 신호가 바로 다음 순간에 덮어써버리는 논리적인 오류 발생
@@ -232,4 +232,5 @@ module top(
     assign uart_txd_pc = 1'b1; // Keep TX line idle
 	assign led_bar = led_bar_w;
 	
+
 endmodule
