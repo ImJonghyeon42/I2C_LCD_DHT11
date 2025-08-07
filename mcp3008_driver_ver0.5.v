@@ -23,7 +23,7 @@ module mcp3008_driver (
     localparam S_COMM_Y    = 4'd5;
     localparam S_DONE      = 4'd6;
 
-    localparam COMM_BITS   = 16;
+    localparam COMM_BITS   = 17;
 	
     reg [4:0] bit_count;
     reg [3:0] state = S_IDLE; 
@@ -113,5 +113,6 @@ module mcp3008_driver (
         end
     end
 endmodule
+
 
 
