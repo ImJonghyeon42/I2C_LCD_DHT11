@@ -17,30 +17,23 @@ module text(
 	input [9:0] x_adc,
 	input [9:0] y_adc
 );
-	function [15:0] int_to_ascii(input [9:0] val);
+		assign	x_d3 = x_adc / 1000;
+		assign	x_d2 = (x_adc % 1000) / 100;
+		assign	x_d1 = (x_adc % 100) / 10;
+		assign	x_d0 = x_adc % 10;
 		
-		d3 = val / 1000;
-		d2 = (val % 1000) / 100;
-		d1 = (val % 100) / 10;
-		d0 = val % 10;
-		int_to_ascii = {(d3+8'h30), (d2+8'h30),(d1+8'h30),(d0+8'h30)};
-	endfunction
-	
+		assign  y_d3 = y_adc / 1000;
+        assign	y_d2 = (y_adc % 1000) / 100;
+		assign	y_d1 = (y_adc % 100) / 10;
+		assign	y_d0 = y_adc % 10;
 	always@(*) begin	
-		reg [3:0] x_d3, x_d2, x_d1, x_d0;
-		reg [3:0] y_d3, y_d2, y_d1, y_d0;
+
 		
 		if(sw) begin
-			x_d3 = x_adc / 1000;
-			x_d2 = (x_adc % 1000) / 100;
-			x_d1 = (x_adc % 100) / 10;
-			x_d0 = x_adc % 10;
+
 						
 			row1 <= {"X: ", (x_d3 + 8'h30),(x_d2 + 8'h30),(x_d1 + 8'h30),(x_d0 + 8'h30), "     "};
-			y_d3 = y_adc / 1000;
-			y_d2 = (y_adc % 1000) / 100;
-			y_d1 = (y_adc % 100) / 10;
-			y_d0 = y_adc % 10;
+
 			row1 <= {"Y: ", (y_d3 + 8'h30),(y_d2 + 8'h30),(y_d1 + 8'h30),(y_d0 + 8'h30), "     "};
             
 		end 
